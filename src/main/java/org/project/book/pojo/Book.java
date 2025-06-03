@@ -34,6 +34,8 @@ public class Book {
     private BigDecimal price;
     @Schema(description = "简介")
     private String description;
+    @Schema(description = "图书封面Base64")
+    private String cover;
     @Schema(description = "图书库存")
     @JsonSerialize(using = ToStringSerializer.class)
     private BigInteger stock;
