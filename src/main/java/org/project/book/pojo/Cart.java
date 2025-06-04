@@ -10,13 +10,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Cart {
+public class Cart implements Serializable {
     @TableId(type = IdType.AUTO)
     @JsonSerialize(using = ToStringSerializer.class)
     @Schema(description = "购物车ID")

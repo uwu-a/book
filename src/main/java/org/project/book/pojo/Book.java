@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -17,7 +18,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Book {
+public class Book implements Serializable {
     @TableId(type = IdType.AUTO)
     @JsonSerialize(using = ToStringSerializer.class)
     @Schema(description = "图书ID")

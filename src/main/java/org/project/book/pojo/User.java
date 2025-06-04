@@ -31,6 +31,6 @@ public class User {
     private String address;
     @Schema(description = "密码")
     private String password;
-    @Schema(description = "用户是否被封禁")
+    @Schema(description = "用户被封禁?")
     private boolean locked;
 }

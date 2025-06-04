@@ -1,6 +1,7 @@
 package org.project.book.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -10,15 +11,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Order {
+public class Order implements Serializable {
     @TableId(type = IdType.AUTO)
     @JsonSerialize(using = ToStringSerializer.class)
     @Schema(description = "订单ID")
@@ -33,4 +36,6 @@ public class Order {
     @JsonSerialize(using = ToStringSerializer.class)
     @Schema(description = "该订单总价")
     private BigDecimal price;
+    @TableField(exist = false)
+    private List<OrderItem> orderItems;
 }

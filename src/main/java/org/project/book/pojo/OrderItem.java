@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -19,7 +20,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Accessors(chain = true)
 @TableName("order_item")
-public class OrderItem {
+public class OrderItem implements Serializable {
     @TableId(type = IdType.AUTO)
     @JsonSerialize(using = ToStringSerializer.class)
     @Schema(description = "订单子项ID")
