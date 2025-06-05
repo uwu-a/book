@@ -1,7 +1,7 @@
 package org.project.book.controller;
 
-import org.project.book.pojo.Order;
 import org.project.book.service.OrderService;
+import org.project.book.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ public class OrderDataController {
     }
 
     @GetMapping("/get")
-    public List<Order> getOrder(@RequestParam BigInteger userID) {
-        return orderService.getOrdersByUserId(userID);
+    public List<OrderVO> getOrder(@RequestParam BigInteger userID) {
+        return orderService.getCombinedOrderByUserID(userID);
     }
 }

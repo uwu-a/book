@@ -47,7 +47,7 @@ class BookApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println(orderService.getOrdersByUserId(new BigInteger("1")));
+
     }
 
 
