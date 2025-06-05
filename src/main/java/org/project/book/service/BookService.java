@@ -25,4 +25,13 @@ public class BookService extends ServiceImpl<BookMapper, Book> {
                 .selectList(Wrappers.lambdaQuery(Book.class).like(Book::getTitle, keyword)
                         .or().like(Book::getAuthor, keyword).or().like(Book::getPublisher, keyword));
     }
+
+    public List<Book> recommend() {
+        long offset = (long) (getBookCount() * Math.random());
+        return getBaseMapper().selectList(Wrappers.<Book>lambdaQuery().last("limit 10 offset " + offset));
+    }
+
+    public long getBookCount() {
+        return getBaseMapper().selectCount(null);
+    }
 }
