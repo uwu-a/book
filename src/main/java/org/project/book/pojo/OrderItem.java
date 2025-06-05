@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Data
@@ -33,7 +32,4 @@ public class OrderItem implements Serializable {
     private BigInteger bookid;
     @Schema(description = "本项图书数量")
     private int quantity;
-    @Schema(description = "本项图书单价")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private BigDecimal univalence;
 }

@@ -8,6 +8,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.junit.jupiter.api.Test;
 import org.project.book.pojo.Book;
 import org.project.book.service.BookService;
+import org.project.book.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
@@ -18,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.net.http.HttpClient;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
@@ -42,16 +42,21 @@ class BookApplicationTests {
             "澄怀文化", "梧桐文献出版社", "博文传播社", "锦书出版社", "天一文化传媒"
     );
 
+    @Autowired
+    OrderService orderService;
+
     @Test
     void contextLoads() {
-
+        System.out.println(orderService.getOrdersByUserId(new BigInteger("1")));
     }
+
+
     String getRandomPublisher() {
         Random random = new Random();
         return pubs.get(random.nextInt(pubs.size()));
     }
 
-    String generateRandom(){
+    String generateRandom() {
         SecureRandom random = new SecureRandom();
         long number = Math.abs(random.nextLong()) % 1_000_000_000_000_00L;
         return String.format("%013d", number);
@@ -85,7 +90,7 @@ class BookApplicationTests {
                     String isbn = generateRandom();
                     String publisher = getRandomPublisher();
                     BigDecimal price = BigDecimal.valueOf(random.nextDouble(50.0, 100.0));
-                    BigInteger stock = new BigInteger(String.valueOf(random.nextInt(2,44)));
+                    BigInteger stock = new BigInteger(String.valueOf(random.nextInt(2, 44)));
 
                     ResponseEntity<byte[]> picRaw = restTemplate.exchange("https://picsum.photos/300/300", HttpMethod.GET, HttpEntity.EMPTY, byte[].class);
 
@@ -100,6 +105,6 @@ class BookApplicationTests {
                 }
             });
         executor.shutdown();
-        executor.awaitTermination(Long.MAX_VALUE,TimeUnit.SECONDS);
+        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
     }
 }
