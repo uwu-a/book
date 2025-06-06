@@ -19,7 +19,7 @@ public class OrderDataController {
     }
 
     @GetMapping("/get")
-    public List<OrderVO> getOrder(@RequestParam BigInteger userID) {
+    public OrderVO getOrder(@RequestParam BigInteger userID) {
         return orderService.getCombinedOrderByUserID(userID);
     }
 

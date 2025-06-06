@@ -1,7 +1,9 @@
 package org.project.book.service;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import org.project.book.enums.OrderStatus;
 import org.project.book.mapper.BookMapper;
 import org.project.book.mapper.OrderItemMapper;
 import org.project.book.mapper.OrderMapper;
@@ -19,6 +21,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class OrderService extends ServiceImpl<OrderMapper, Order> {
@@ -31,7 +34,23 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
         this.orderItemMapper = orderItemMapper;
     }
 
-    public List<OrderVO> getCombinedOrderByUserID(BigInteger userID) {
+    public OrderVO getCombinedOrderByUserID(BigInteger userID) {
+        OrderVO order = getOrderByUserID(userID);
+        checkExpired(order);
+        return order;
+    }
+
+    private void checkExpired(OrderVO order) {
+        if (order != null && order.getStatus() == OrderStatus.UNPAID.getCode() && new Date().getTime() - order.getTime().getTime() > 1000 * 60 * 10) {
+            order.setStatus(OrderStatus.CANCELLED.getCode());
+            CompletableFuture.runAsync(() -> {
+                update(Wrappers.lambdaUpdate(Order.class).eq(Order::getId, order.getOrderID())
+                        .set(Order::getStatus, OrderStatus.CANCELLED.getCode()));
+            });
+        }
+    }
+
+    private OrderVO getOrderByUserID(BigInteger userID) {
         MPJLambdaWrapper<Order> wrapper = new MPJLambdaWrapper<Order>()
                 .selectAs(Order::getId, OrderVO::getOrderID)
                 .selectAs(Order::getStatus, OrderVO::getStatus)
@@ -43,7 +62,7 @@ public class OrderService extends ServiceImpl<OrderMapper, Order> {
                 .leftJoin(Book.class, Book::getId, OrderItem::getBookid)
                 .eq(Order::getUserid, userID);
 
-        return getBaseMapper().selectJoinList(OrderVO.class, wrapper);
+        return getBaseMapper().selectJoinList(OrderVO.class, wrapper).getFirst();
     }
 
     @Transactional
