@@ -17,6 +17,7 @@ public class RestExceptionAdvice {
         return new ResponseEntity<>(optimisticLockingFailureMessage, HttpStatus.CONFLICT);
     }
 
+
     @ExceptionHandler
     public ResponseEntity<Void> exceptionHandler(Exception e) {
         log.error(e);
