@@ -22,7 +22,7 @@ public class BookService extends ServiceImpl<BookMapper, Book> {
 
     public List<Book> queryByAnyKeyword(String keyword) {
         return super.getBaseMapper()
-                .selectList(Wrappers.lambdaQuery(Book.class).like(Book::getTitle, keyword)
+                .selectList(Wrappers.lambdaQuery(Book.class).like(Book::getBook_name, keyword)
                         .or().like(Book::getAuthor, keyword).or().like(Book::getPublisher, keyword));
     }
 

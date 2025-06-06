@@ -1,12 +1,10 @@
 package org.project.book.controller;
 
+import org.project.book.pojo.OrderItem;
 import org.project.book.service.OrderService;
 import org.project.book.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -23,5 +21,10 @@ public class OrderDataController {
     @GetMapping("/get")
     public List<OrderVO> getOrder(@RequestParam BigInteger userID) {
         return orderService.getCombinedOrderByUserID(userID);
+    }
+
+    @PostMapping("/generate")
+    public void generateOrder(@RequestBody List<OrderItem> orderItems) {
+        orderService.createOrder(orderItems,new BigInteger("1")); //TODO
     }
 }

@@ -29,19 +29,19 @@ public class BookDataController {
     }
 
     @GetMapping("/isbn")
-    @Operation(description = "按ID查询一本书")
+
     public Book getBookByISBN(@RequestParam String ISBN) {
         return bookService.queryByISBN(ISBN);
     }
 
     @GetMapping("/query")
-    @Operation(description = "按作者、标题、出版社的关键字查询图书")
+
     public List<Book> getBookByTitle(@RequestParam String key) {
         return bookService.queryByAnyKeyword(key);
     }
 
     @GetMapping("/recommend")
-    @Operation(description = "随机推荐几本书")
+
     public List<Book> getBookByRecommend() {
         return bookService.recommend();
     }
