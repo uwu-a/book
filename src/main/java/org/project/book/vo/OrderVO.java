@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import org.project.book.pojo.Book;
+import org.project.book.serializer.OrderStatusSerializer;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,6 +24,7 @@ import java.util.List;
 public class OrderVO implements Serializable {
     @JsonSerialize(using = ToStringSerializer.class)
     private BigInteger orderID;
+    @JsonSerialize(using = OrderStatusSerializer.class)
     private int Status;
     @JsonSerialize(using = ToStringSerializer.class)
     private BigInteger userID;

@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import org.project.book.serializer.OrderStatusSerializer;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

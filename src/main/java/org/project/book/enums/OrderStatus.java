@@ -20,6 +20,11 @@ public enum OrderStatus {
         this.description = description;
     }
 
+    public static String getDescriptionByCode(int code) {
+        OrderStatus status = fromCode(code);
+        return status != null ? status.getDescription() : null;
+    }
+
     public static OrderStatus fromCode(int code) {
         for (OrderStatus status : OrderStatus.values()) {
             if (status.getCode() == code) {
